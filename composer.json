@@ -10,11 +10,12 @@
 			"name": "Marc Alexander",
 			"email": "admin@m-a-styles.de",
 			"homepage": "https://www.m-a-styles.de",
-			"role": "Developer",
+			"role": "Developer"
 		}
 	],
 	"require": {
-		"php": ">=5.3.0"
+		"php": ">=5.3.0",
+		"christian-riesen/base32": "1.2"
 	},
 	"autoload": {
 		"psr-0": {
