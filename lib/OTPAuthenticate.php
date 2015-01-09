@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package OTPAuthenticate
  * @copyright (c) Marc Alexander <admin@m-a-styles.de>
