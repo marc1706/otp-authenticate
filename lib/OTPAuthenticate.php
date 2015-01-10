@@ -68,7 +68,17 @@ class OTPAuthenticate
 
 	public function checkTOTP($secret, $code)
 	{
+		$time = $this->getTimestampCounter(time());
 
+		for ($i = -1; $i <= 1; $i++)
+		{
+			if ($this->stringCompare($code, $this->generateCode($secret, $time + $i)) === true)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -119,5 +129,50 @@ class OTPAuthenticate
 	public function getTimestampCounter($time)
 	{
 		return floor($time / 30);
+	}
+
+	/**
+	 * Compare two strings in constant time to prevent timing attacks.
+	 *
+	 * @param string $string_a Initial string
+	 * @param string $string_b String to compare initial string to
+	 *
+	 * @return bool True if strings are the same, false if not
+	 */
+	public function stringCompare($string_a, $string_b)
+	{
+		$diff = strlen($string_a) ^ strlen($string_b);
+
+		for ($i = 0; $i < strlen($string_a) && $i < strlen($string_b); $i++)
+		{
+			$diff |= ord($string_a[$i]) ^ ord($string_b[$i]);
+		}
+
+		return $diff === 0;
+	}
+
+	/**
+	 * Generate secret with specified length
+	 *
+	 * @param int $length
+	 *
+	 * @return string
+	 */
+	public function generateSecret($length = 10)
+	{
+		$strong_secret = false;
+
+		// Try to get $crypto_strong to evaluate to true. Give it 5 tries.
+		for ($i = 0; $i < 5; $i++)
+		{
+			$secret = openssl_random_pseudo_bytes($length, $strong_secret);
+
+			if ($strong_secret === true)
+			{
+				return $this->base32->encode($secret);
+			}
+		}
+
+		return '';
 	}
 }

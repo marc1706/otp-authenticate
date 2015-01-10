@@ -71,4 +71,58 @@ class generateCode extends \PHPUnit_Framework_TestCase
 			$start_time = $start_time + 30;
 		}
 	}
+
+	public function data_testSafeCompare()
+	{
+		return array(
+			array('foobar', 'foobar', true),
+			array('baffoo', 'foobar', false),
+			array(0, 0, true),
+			array(true, true, true),
+			array(false, true, false),
+		);
+	}
+
+	/**
+	 * @dataProvider data_testSafeCompare
+	 */
+	public function testSafeCompare($a, $b, $expected)
+	{
+		$this->assertSame($expected, $this->otp_auth->stringCompare($a, $b));
+	}
+
+	public function testGenerateSecret()
+	{
+		$time = microtime(true);
+		$secret = '';
+
+		while ((microtime(true) - $time) < 1)
+		{
+			$new_secret = $this->otp_auth->generateSecret(10);
+			$this->assertNotSame($secret, $new_secret);
+			$this->assertEquals(16, strlen($new_secret));
+			$secret = $new_secret;
+		}
+	}
+
+	public function data_testCheckTOTP()
+	{
+		return array(
+			array(-1, true),
+			array(-5, false),
+			array(0, true),
+			array(1, true),
+			array(2, false),
+		);
+	}
+
+	/**
+	 * @dataProvider data_testCheckTOTP
+	 */
+	public function testCheckTOTP($offset, $expected)
+	{
+		$code = $this->otp_auth->generateCode($this->secret, $this->otp_auth->getTimestampCounter(time()) + $offset);
+
+		$this->assertSame($expected, $this->otp_auth->checkTOTP($this->secret, $code));
+	}
 }
