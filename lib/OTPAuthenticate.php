@@ -47,20 +47,20 @@ class OTPAuthenticate
 	 * Generates code based on timestamp and secret
 	 *
 	 * @param string $secret Secret shared with user
-	 * @param int $time Timestamp
+	 * @param int $counter Counter for code generation
 	 *
 	 * @return string Generated TOTP code
 	 */
-	public function generateCode($secret, $time)
+	public function generateCode($secret, $counter)
 	{
 		$key = $this->base32->decode($secret);
 
-		if (strlen($key) !== $this->secret_length && empty($time))
+		if (strlen($key) !== $this->secret_length && empty($counter))
 		{
 			return '';
 		}
 
-		$hash = hash_hmac('sha1', $this->getBinaryTimeCounter($time), $key, true);
+		$hash = hash_hmac('sha1', $this->getBinaryCounter($counter), $key, true);
 
 		return str_pad($this->truncate($hash), $this->code_length, '0', STR_PAD_LEFT);
 	}
@@ -94,12 +94,24 @@ class OTPAuthenticate
 	/**
 	 * Get binary version of time counter
 	 *
-	 * @param int $time Timestamp
+	 * @param int $counter Timestamp or counter
 	 *
 	 * @return string Binary time counter
 	 */
-	protected function getBinaryTimeCounter($time)
+	protected function getBinaryCounter($counter)
 	{
-		return pack('N*', 0) . pack('N*', floor($time / 30));
+		return pack('N*', 0) . pack('N*', $counter);
+	}
+
+	/**
+	 * Get counter from timestamp
+	 *
+	 * @param int $time Timestamp
+	 *
+	 * @return int Counter
+	 */
+	public function getTimestampCounter($time)
+	{
+		return floor($time / 30);
 	}
 }
