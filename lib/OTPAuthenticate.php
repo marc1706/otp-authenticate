@@ -76,7 +76,6 @@ class OTPAuthenticate
 	{
 		$truncated_hash = 0;
 		$offset = ord($hash[self::SHA1_DIGEST_LENGTH - 1]) & 0xF;
-		var_dump($offset);
 
 		for ($i = 0; $i < 4; ++$i)
 		{
