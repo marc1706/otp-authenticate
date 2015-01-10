@@ -14,7 +14,7 @@ namespace OTPAuthenticat\tests;
 require_once(dirname(__FILE__) . '/../lib/OTPAuthenticate.php');
 require_once(dirname(__FILE__) . '/../vendor/christian-riesen/base32/src/Base32.php');
 
-class generateCode extends \PHPUnit_Framework_TestCase
+class OTPAuthenticate extends \PHPUnit_Framework_TestCase
 {
 	protected $secret = "MRTGW2TEONWDQMR7";
 
