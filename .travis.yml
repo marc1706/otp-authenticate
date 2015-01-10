@@ -9,4 +9,5 @@ php:
 
 before_script: composer install
 
-script: phpunit
+script:
+    - travis/run-phpunit.sh $TRAVIS_PHP_VERSION
