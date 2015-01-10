@@ -66,6 +66,14 @@ class OTPAuthenticate
 		return str_pad($this->truncate($hash), $this->code_length, '0', STR_PAD_LEFT);
 	}
 
+	/**
+	 * Check if supplied TOTP code is valid
+	 *
+	 * @param string $secret Secret to use for comparison
+	 * @param int $code Supplied TOTP code
+	 *
+	 * @return bool True if code is valid, false if not
+	 */
 	public function checkTOTP($secret, $code)
 	{
 		$time = $this->getTimestampCounter(time());
