@@ -72,7 +72,7 @@ class OTPAuthenticate extends \PHPUnit_Framework_TestCase
 		}
 	}
 
-	public function data_testSafeCompare()
+	public function data_testStringCompare()
 	{
 		return array(
 			array('foobar', 'foobar', true),
@@ -84,9 +84,9 @@ class OTPAuthenticate extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @dataProvider data_testSafeCompare
+	 * @dataProvider data_testStringCompare
 	 */
-	public function testSafeCompare($a, $b, $expected)
+	public function testStringCompare($a, $b, $expected)
 	{
 		$this->assertSame($expected, $this->otp_auth->stringCompare($a, $b));
 	}
@@ -124,5 +124,11 @@ class OTPAuthenticate extends \PHPUnit_Framework_TestCase
 		$code = $this->otp_auth->generateCode($this->secret, $this->otp_auth->getTimestampCounter(time()) + $offset);
 
 		$this->assertSame($expected, $this->otp_auth->checkTOTP($this->secret, $code));
+	}
+
+	public function testEmptyCounter()
+	{
+		$this->assertSame('', $this->otp_auth->generateCode($this->secret, ''));
+		$this->assertSame('', $this->otp_auth->generateCode($this->secret, 0));
 	}
 }
