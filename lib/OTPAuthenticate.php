@@ -55,7 +55,7 @@ class OTPAuthenticate
 	{
 		$key = $this->base32->decode($secret);
 
-		if (strlen($key) !== $this->secret_length && empty($counter))
+		if (strlen($key) !== $this->secret_length || empty($counter))
 		{
 			return '';
 		}
