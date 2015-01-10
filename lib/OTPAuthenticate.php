@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * OTPAuthenticate
  * @package OTPAuthenticate
  * @copyright (c) Marc Alexander <admin@m-a-styles.de>
  *
@@ -49,13 +50,13 @@ class OTPAuthenticate
 	 * @param string $secret Secret shared with user
 	 * @param int $counter Counter for code generation
 	 *
-	 * @return string Generated TOTP code
+	 * @return string Generated OTP code
 	 */
 	public function generateCode($secret, $counter)
 	{
 		$key = $this->base32->decode($secret);
 
-		if (strlen($key) !== $this->secret_length || empty($counter))
+		if (empty($counter))
 		{
 			return '';
 		}
@@ -63,6 +64,11 @@ class OTPAuthenticate
 		$hash = hash_hmac('sha1', $this->getBinaryCounter($counter), $key, true);
 
 		return str_pad($this->truncate($hash), $this->code_length, '0', STR_PAD_LEFT);
+	}
+
+	public function checkTOTP($secret, $code)
+	{
+
 	}
 
 	/**
@@ -77,6 +83,7 @@ class OTPAuthenticate
 		$truncated_hash = 0;
 		$offset = ord($hash[self::SHA1_DIGEST_LENGTH - 1]) & 0xF;
 
+		// Truncate hash using supplied sha1 hash
 		for ($i = 0; $i < 4; ++$i)
 		{
 			$truncated_hash <<= 8;
