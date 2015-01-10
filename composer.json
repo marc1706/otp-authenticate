@@ -22,8 +22,8 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"marc1706\\OTPAuthenticate\\": "/lib",
-			"marc1706\\OTPAuthenticate\\tests\\": "/tests"
+			"OTPAuthenticate\\": "/lib",
+			"OTPAuthenticate\\tests\\": "/tests"
 		}
 	}
 }

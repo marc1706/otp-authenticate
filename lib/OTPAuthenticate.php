@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace marc1706\OTPAuthenticate;
+namespace OTPAuthenticate;
 
 use Base32\Base32;
 
