@@ -50,13 +50,24 @@ class OTPAuthenticate extends \PHPUnit_Framework_TestCase
 		'515792',
 	);
 
+	protected $totp_512_codes = array(
+		'876388',
+		'543910',
+		'359798',
+		'103390',
+		'473509',
+		'110596',
+		'368131',
+		'786714',
+	);
+
 	public function testGenerateCodeHOTP()
 	{
 		$counter = 1;
 
 		foreach ($this->hotp_codes as $code)
 		{
-			$this->assertSame($code, $this->otp_auth->generateCode($this->secret, $counter));
+			$this->assertSame($code, $this->otp_auth->generateCode($this->secret, $counter, 'sha1'));
 			$counter++;
 		}
 	}
@@ -66,6 +77,17 @@ class OTPAuthenticate extends \PHPUnit_Framework_TestCase
 		$start_time = 1420906262;
 
 		foreach ($this->totp_codes as $code)
+		{
+			$this->assertSame($code, $this->otp_auth->generateCode($this->secret, $this->otp_auth->getTimestampCounter($start_time), 'sha1'));
+			$start_time = $start_time + 30;
+		}
+	}
+
+	public function testGenerateCodeTOTP512()
+	{
+		$start_time = 1420937310;
+
+		foreach ($this->totp_512_codes as $code)
 		{
 			$this->assertSame($code, $this->otp_auth->generateCode($this->secret, $this->otp_auth->getTimestampCounter($start_time)));
 			$start_time = $start_time + 30;

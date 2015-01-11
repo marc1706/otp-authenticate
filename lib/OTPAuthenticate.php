@@ -15,9 +15,6 @@ use Base32\Base32;
 
 class OTPAuthenticate
 {
-	/** int sha1 digest length */
-	const SHA1_DIGEST_LENGTH = 20;
-
 	/** int verification code modulus */
 	const VERIFICATION_CODE_MODULUS = 1e6;
 
@@ -49,10 +46,14 @@ class OTPAuthenticate
 	 *
 	 * @param string $secret Secret shared with user
 	 * @param int $counter Counter for code generation
+	 * @param string $algorithm Algorithm to use for HMAC hash.
+	 *			Defaults to sha512. The following hash types are allowed:
+	 *				TOTP: sha1, sha256, sha512
+	 *				HOTP: sha1
 	 *
 	 * @return string Generated OTP code
 	 */
-	public function generateCode($secret, $counter)
+	public function generateCode($secret, $counter, $algorithm = 'sha512')
 	{
 		$key = $this->base32->decode($secret);
 
@@ -61,7 +62,7 @@ class OTPAuthenticate
 			return '';
 		}
 
-		$hash = hash_hmac('sha1', $this->getBinaryCounter($counter), $key, true);
+		$hash = hash_hmac($algorithm, $this->getBinaryCounter($counter), $key, true);
 
 		return str_pad($this->truncate($hash), $this->code_length, '0', STR_PAD_LEFT);
 	}
@@ -99,7 +100,7 @@ class OTPAuthenticate
 	protected function truncate($hash)
 	{
 		$truncated_hash = 0;
-		$offset = ord($hash[self::SHA1_DIGEST_LENGTH - 1]) & 0xF;
+		$offset = ord(substr($hash, -1)) & 0xF;
 
 		// Truncate hash using supplied sha1 hash
 		for ($i = 0; $i < 4; ++$i)
