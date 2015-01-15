@@ -72,16 +72,17 @@ class OTPAuthenticate
 	 *
 	 * @param string $secret Secret to use for comparison
 	 * @param int $code Supplied TOTP code
+	 * @param string $hash_type Hash type
 	 *
 	 * @return bool True if code is valid, false if not
 	 */
-	public function checkTOTP($secret, $code)
+	public function checkTOTP($secret, $code, $hash_type = 'sha512')
 	{
 		$time = $this->getTimestampCounter(time());
 
 		for ($i = -1; $i <= 1; $i++)
 		{
-			if ($this->stringCompare($code, $this->generateCode($secret, $time + $i)) === true)
+			if ($this->stringCompare($code, $this->generateCode($secret, $time + $i, $hash_type)) === true)
 			{
 				return true;
 			}

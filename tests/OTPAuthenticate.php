@@ -18,6 +18,12 @@ class OTPAuthenticate extends \PHPUnit_Framework_TestCase
 {
 	protected $secret = "MRTGW2TEONWDQMR7";
 
+	protected $hash_types = array(
+		'sha1',
+		'sha256',
+		'sha512',
+	);
+
 	/** @var \OTPAuthenticate\OTPAuthenticate */
 	protected $otp_auth;
 
@@ -143,9 +149,12 @@ class OTPAuthenticate extends \PHPUnit_Framework_TestCase
 	 */
 	public function testCheckTOTP($offset, $expected)
 	{
-		$code = $this->otp_auth->generateCode($this->secret, $this->otp_auth->getTimestampCounter(time()) + $offset);
+		foreach ($this->hash_types as $type)
+		{
+			$code = $this->otp_auth->generateCode($this->secret, $this->otp_auth->getTimestampCounter(time()) + $offset, $type);
 
-		$this->assertSame($expected, $this->otp_auth->checkTOTP($this->secret, $code));
+			$this->assertSame($expected, $this->otp_auth->checkTOTP($this->secret, $code, $type));
+		}
 	}
 
 	public function testEmptyCounter()
