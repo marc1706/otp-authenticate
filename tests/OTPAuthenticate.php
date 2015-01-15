@@ -162,4 +162,25 @@ class OTPAuthenticate extends \PHPUnit_Framework_TestCase
 		$this->assertSame('', $this->otp_auth->generateCode($this->secret, ''));
 		$this->assertSame('', $this->otp_auth->generateCode($this->secret, 0));
 	}
+
+	public function data_testCheckHOTP()
+	{
+		return array(
+			array(1, '996554', '344551', '439887', true),
+			array(2, '602287', '730792', '644671', true),
+			array(3, '143627', '653637', '829955', true),
+			array(4, '960129', '766270', '708699', true),
+			array(5, '768897', '302147', '923460', true),
+		);
+	}
+
+	/**
+	 * @dataProvider data_testCheckHOTP
+	 */
+	public function testCheckHOTP($counter, $code_sha1, $code_sha256, $code_sha512, $expected)
+	{
+		$this->assertSame($expected, $this->otp_auth->checkHOTP('JBSWY3DPEHPK3PXP', $counter, $code_sha1, 'sha1'));
+		$this->assertSame($expected, $this->otp_auth->checkHOTP('JBSWY3DPEHPK3PXP', $counter, $code_sha256, 'sha256'));
+		$this->assertSame($expected, $this->otp_auth->checkHOTP('JBSWY3DPEHPK3PXP', $counter, $code_sha512, 'sha512'));
+	}
 }

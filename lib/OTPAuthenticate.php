@@ -92,6 +92,21 @@ class OTPAuthenticate
 	}
 
 	/**
+	 * Check if supplied HOTP code is valid
+	 *
+	 * @param string $secret Secret to use for comparison
+	 * @param int $counter Current counter
+	 * @param int $code Supplied HOTP code
+	 * @param string $hash_type Hash type
+	 *
+	 * @return bool True if code is valid, false if not
+	 */
+	public function checkHOTP($secret, $counter, $code, $hash_type = 'sha512')
+	{
+		return $this->stringCompare($code, $this->generateCode($secret, $counter, $hash_type));
+	}
+
+	/**
 	 * Truncate HMAC hash to binary for generating a TOTP code
 	 *
 	 * @param string $hash HMAC hash
