@@ -1,7 +1,7 @@
 <?php
 
 /**
- * generateCode Test
+ * OTPAuthenticate Test
  * @package OTPAuthenticate
  * @copyright (c) Marc Alexander <admin@m-a-styles.de>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace OTPAuthenticat\tests;
+namespace OTPAuthenticate\tests;
 
 require_once(dirname(__FILE__) . '/../lib/OTPAuthenticate.php');
 require_once(dirname(__FILE__) . '/../vendor/christian-riesen/base32/src/Base32.php');
