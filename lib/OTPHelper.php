@@ -96,19 +96,42 @@ class OTPHelper
 	{
 		$string = trim($string);
 
-		if (empty($string) && $part === 'account')
+		if ($part === 'account')
+		{
+			$this->setAccount($string);
+		}
+		else if ($part === 'issuer')
+		{
+			$this->setIssuer($string);
+		}
+	}
+
+	/**
+	 * Format and and set account name
+	 *
+	 * @param string $account Account name
+	 */
+	protected function setAccount($account)
+	{
+		if (empty($account))
 		{
 			throw new \InvalidArgumentException("Label can't contain empty strings");
 		}
 
-		if ($part === 'issuer' && !empty($string))
+		$this->label .= str_replace('%40', '@', rawurlencode($account));
+	}
+
+	/**
+	 * Format and set issuer
+	 *
+	 * @param string $issuer Issuer name
+	 */
+	protected function setIssuer($issuer)
+	{
+		if (!empty($issuer))
 		{
-			$this->label = rawurlencode($string) . ':';
-			$this->issuer = '&issuer=' . rawurlencode($string);
-		}
-		else
-		{
-			$this->label .= str_replace('%40', '@', rawurlencode($string));
+			$this->label = rawurlencode($issuer) . ':';
+			$this->issuer = '&issuer=' . rawurlencode($issuer);
 		}
 	}
 
