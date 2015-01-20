@@ -91,7 +91,7 @@ class OTPHelper extends \PHPUnit_Framework_TestCase
 	public function data_testGetURIExceptions()
 	{
 		return array(
-			array('InvalidArgumentException', 'The type foobar is not supported', array(
+			array('InvalidArgumentException', 'The OTP type foobar is not supported', array(
 				'foobar',
 				'FOOBAR',
 				'meh@meh.com',

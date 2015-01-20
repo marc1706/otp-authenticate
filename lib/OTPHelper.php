@@ -52,8 +52,8 @@ class OTPHelper
 	public function generateKeyURI($type, $secret, $account, $issuer = '', $counter = 0, $algorithm = '', $digits = '', $period = '')
 	{
 		// Check if type is supported
-		$this->validateInput('type', $type);
-		$this->validateInput('algorithm', $algorithm, false);
+		$this->validateType($type);
+		$this->validateAlgorithm($algorithm);
 
 		// Format label string
 		$this->formatLabel($issuer, 'issuer');
@@ -69,18 +69,32 @@ class OTPHelper
 	}
 
 	/**
-	 * Check if input data is supported
+	 * Check if OTP type is supported
 	 *
-	 * @param string $type Input type
-	 * @param string $data Input data
-	 * @param bool $required Whether input is required
+	 * @param string $type OTP type
+	 *
+	 * @throws \InvalidArgumentException When type is not supported
 	 */
-	protected function validateInput($type, $data, $required = true)
+	protected function validateType($type)
 	{
-		$variable = 'allowed' . ucfirst($type);
-		if ((empty($data) && $required) || (!empty($data) && !in_array($data, $this->$variable)))
+		if (empty($type) || !in_array($type, $this->allowedType))
 		{
-			throw new \InvalidArgumentException("The $type $data is not supported");
+			throw new \InvalidArgumentException("The OTP type $type is not supported");
+		}
+	}
+
+	/**
+	 * Check if algorithm is supported
+	 *
+	 * @param string $algorithm Algorithm to use
+	 *
+	 * @throws \InvalidArgumentException When algorithm is not supported
+	 */
+	protected function validateAlgorithm($algorithm)
+	{
+		if (!empty($algorithm) && !in_array($algorithm, $this->allowedAlgorithm))
+		{
+			throw new \InvalidArgumentException("The algorithm $algorithm is not supported");
 		}
 	}
 
@@ -89,8 +103,6 @@ class OTPHelper
 	 *
 	 * @param string $string The label string
 	 * @param string $part Part of label
-	 *
-	 * @throws \InvalidArgumentException When given account name is an empty string
 	 */
 	protected function formatLabel($string, $part)
 	{
@@ -110,6 +122,8 @@ class OTPHelper
 	 * Format and and set account name
 	 *
 	 * @param string $account Account name
+	 *
+	 * @throws \InvalidArgumentException When given account name is an empty string
 	 */
 	protected function setAccount($account)
 	{
