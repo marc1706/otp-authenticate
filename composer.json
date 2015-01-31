@@ -1,8 +1,8 @@
 {
-	"name": "marc1706/otp-authenticate",
+	"name": "marc1706/OTPAuthenticate",
 	"type": "library",
-	"description": "Provides a simple and up-to-date library for two-factor authentication using TOTP hashes and Google Authenticator or a similar app.",
-	"keywords": ["TOTP", "OTP", "Google", "Authenticator", "Two-Factor", "Authentication"],
+	"description": "Provides a simple and up-to-date library for two-factor authentication using OTP hashes and Google Authenticator or a similar app.",
+	"keywords": ["TOTP", "OTP", "Google", "Authenticator", "Two-Factor", "Authentication", "HOTP"],
 	"homepage": "https://www.m-a-styles.de",
 	"license": "MIT",
 	"authors": [
@@ -21,7 +21,7 @@
 		"phpunit/phpunit": "4.1.*"
 	},
 	"autoload": {
-		"psr-0": {
+		"psr-4": {
 			"OTPAuthenticate\\": "/lib",
 			"OTPAuthenticate\\tests\\": "/tests"
 		}
