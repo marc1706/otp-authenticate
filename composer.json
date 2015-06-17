@@ -1,5 +1,5 @@
 {
-	"name": "marc1706/OTPAuthenticate",
+	"name": "marc1706/otp-authenticate",
 	"type": "library",
 	"description": "Provides a simple and up-to-date library for two-factor authentication using OTP hashes and Google Authenticator or a similar app.",
 	"keywords": ["TOTP", "OTP", "Google", "Authenticator", "Two-Factor", "Authentication", "HOTP"],
