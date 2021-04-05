@@ -11,14 +11,16 @@
 
 namespace OTPAuthenticate\tests;
 
+use PHPUnit\Framework\TestCase;
+
 require_once(dirname(__FILE__) . '/../lib/OTPHelper.php');
 
-class OTPHelper extends \PHPUnit_Framework_TestCase
+class OTPHelper extends TestCase
 {
 	/** @var \OTPAuthenticate\OTPHelper */
 	protected $OTPHelper;
 
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 
@@ -129,8 +131,9 @@ class OTPHelper extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetURIExceptions($expectedException, $exceptionText, $input)
 	{
-		$this->setExpectedException($expectedException, $exceptionText);
+		$this->expectException($expectedException);
+		$this->expectDeprecationMessage($exceptionText);
 
-		var_dump(call_user_func_array(array($this->OTPHelper, 'generateKeyURI'), $input));
+		call_user_func_array(array($this->OTPHelper, 'generateKeyURI'), $input);
 	}
 }

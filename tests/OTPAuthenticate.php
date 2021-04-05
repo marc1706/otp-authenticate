@@ -11,10 +11,12 @@
 
 namespace OTPAuthenticate\tests;
 
+use PHPUnit\Framework\TestCase;
+
 require_once(dirname(__FILE__) . '/../lib/OTPAuthenticate.php');
 require_once(dirname(__FILE__) . '/../vendor/christian-riesen/base32/src/Base32.php');
 
-class OTPAuthenticate extends \PHPUnit_Framework_TestCase
+class OTPAuthenticate extends TestCase
 {
 	protected $secret = "MRTGW2TEONWDQMR7";
 
@@ -27,7 +29,7 @@ class OTPAuthenticate extends \PHPUnit_Framework_TestCase
 	/** @var \OTPAuthenticate\OTPAuthenticate */
 	protected $otp_auth;
 
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 
@@ -109,14 +111,6 @@ class OTPAuthenticate extends \PHPUnit_Framework_TestCase
 			array(true, true, true),
 			array(false, true, false),
 		);
-	}
-
-	/**
-	 * @dataProvider data_testStringCompare
-	 */
-	public function testStringCompare($a, $b, $expected)
-	{
-		$this->assertSame($expected, $this->otp_auth->stringCompare($a, $b));
 	}
 
 	public function testGenerateSecret()

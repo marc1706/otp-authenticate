@@ -8,13 +8,13 @@ Codes are compared using a constant time comparison method and secrets are gener
 
 ### Requirements
 
-PHP 5.3.0 or newer is required for this library to work.
+PHP 7.2.0 or newer is required for this library to work.
 
 ### Automated Testing
 
 The library is being tested using unit tests to prevent possible issues.
 
-[![Build Status](https://travis-ci.org/marc1706/otp-authenticate.svg?branch=master)](https://travis-ci.org/marc1706/otp-authenticate)
+[![Tests](https://github.com/marc1706/otp-authenticate/actions/workflows/tests.yml/badge.svg)](https://github.com/marc1706/otp-authenticate/actions/workflows/tests.yml)
 [![Code Coverage](https://scrutinizer-ci.com/g/marc1706/otp-authenticate/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/marc1706/otp-authenticate/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/marc1706/otp-authenticate/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/marc1706/otp-authenticate/?branch=master)
 
