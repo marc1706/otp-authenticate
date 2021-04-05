@@ -113,14 +113,6 @@ class OTPAuthenticate extends TestCase
 		);
 	}
 
-	/**
-	 * @dataProvider data_testStringCompare
-	 */
-	public function testStringCompare($a, $b, $expected)
-	{
-		$this->assertSame($expected, $this->otp_auth->stringCompare($a, $b));
-	}
-
 	public function testGenerateSecret()
 	{
 		$time = microtime(true);

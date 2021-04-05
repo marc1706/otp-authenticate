@@ -82,7 +82,7 @@ class OTPAuthenticate
 
 		for ($i = -1; $i <= 1; $i++)
 		{
-			if ($this->stringCompare($code, $this->generateCode($secret, $time + $i, $hash_type)) === true)
+			if (hash_equals($code, $this->generateCode($secret, $time + $i, $hash_type)) === true)
 			{
 				return true;
 			}
@@ -103,7 +103,7 @@ class OTPAuthenticate
 	 */
 	public function checkHOTP($secret, $counter, $code, $hash_type = 'sha512')
 	{
-		return $this->stringCompare($code, $this->generateCode($secret, $counter, $hash_type));
+		return hash_equals($code, $this->generateCode($secret, $counter, $hash_type));
 	}
 
 	/**
@@ -154,26 +154,6 @@ class OTPAuthenticate
 	public function getTimestampCounter($time)
 	{
 		return floor($time / 30);
-	}
-
-	/**
-	 * Compare two strings in constant time to prevent timing attacks.
-	 *
-	 * @param string $string_a Initial string
-	 * @param string $string_b String to compare initial string to
-	 *
-	 * @return bool True if strings are the same, false if not
-	 */
-	public function stringCompare($string_a, $string_b)
-	{
-		$diff = strlen($string_a) ^ strlen($string_b);
-
-		for ($i = 0; $i < strlen($string_a) && $i < strlen($string_b); $i++)
-		{
-			$diff |= ord($string_a[$i]) ^ ord($string_b[$i]);
-		}
-
-		return $diff === 0;
 	}
 
 	/**
