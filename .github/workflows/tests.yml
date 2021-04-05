@@ -34,11 +34,11 @@ jobs:
       - name: Run unit tests
         if: matrix.php == '7.2'
         run: |
-          phpunit --coverage-clover=coverage.clover
+          vendor/bin/phpunit --coverage-clover=coverage.clover
           wget https://scrutinizer-ci.com/ocular.phar
           php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
       - name: Run unit tests
         if: matrix.php != '7.2'
         run: |
-          phpunit
+          vendor/bin/phpunit
