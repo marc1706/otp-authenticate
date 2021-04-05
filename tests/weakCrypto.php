@@ -11,10 +11,12 @@
 
 namespace OTPAuthenticate;
 
+use PHPUnit\Framework\TestCase;
+
 require_once(dirname(__FILE__) . '/../lib/OTPAuthenticate.php');
 require_once(dirname(__FILE__) . '/../vendor/christian-riesen/base32/src/Base32.php');
 
-class weakCrypto extends \PHPUnit_Framework_TestCase
+class weakCrypto extends TestCase
 {
 	protected $secret = "MRTGW2TEONWDQMR7";
 
@@ -23,7 +25,7 @@ class weakCrypto extends \PHPUnit_Framework_TestCase
 	/** @var \OTPAuthenticate\OTPAuthenticate */
 	protected $otp_auth;
 
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 

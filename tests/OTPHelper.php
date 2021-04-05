@@ -11,14 +11,16 @@
 
 namespace OTPAuthenticate\tests;
 
+use PHPUnit\Framework\TestCase;
+
 require_once(dirname(__FILE__) . '/../lib/OTPHelper.php');
 
-class OTPHelper extends \PHPUnit_Framework_TestCase
+class OTPHelper extends TestCase
 {
 	/** @var \OTPAuthenticate\OTPHelper */
 	protected $OTPHelper;
 
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 
