@@ -31,6 +31,9 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: ${{ matrix.php != '7.2' && 'none' || 'xdebug' }}
 
+      - name: Install composer dependencies
+        uses: php-actions/composer@v5
+
       - name: Run unit tests
         if: matrix.php == '7.2'
         run: |
