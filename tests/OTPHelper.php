@@ -131,8 +131,9 @@ class OTPHelper extends TestCase
 	 */
 	public function testGetURIExceptions($expectedException, $exceptionText, $input)
 	{
-		$this->setExpectedException($expectedException, $exceptionText);
+		$this->expectException($expectedException);
+		$this->expectDeprecationMessage($exceptionText);
 
-		var_dump(call_user_func_array(array($this->OTPHelper, 'generateKeyURI'), $input));
+		call_user_func_array(array($this->OTPHelper, 'generateKeyURI'), $input);
 	}
 }
