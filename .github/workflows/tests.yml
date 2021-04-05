@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - ticket/1
     tags:
       - '*'
   pull_request:
